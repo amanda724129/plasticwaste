@@ -1,0 +1,11 @@
+Package: plasticwaste
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("Amanda", "Iang", , "aiang@calpoly.edu", role = c("aut", "cre"))
+Description: This package is meant to provide functions that make the process of data wrangling easier when it comes to analyzing plastic waste and GDP data. 
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
