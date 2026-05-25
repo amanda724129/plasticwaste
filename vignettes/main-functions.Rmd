@@ -7,15 +7,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
----
-title: "main-functions"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{main-functions}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
 ```{r}
 quantile_table(lower_quantile, upper_quantile)
 ```
