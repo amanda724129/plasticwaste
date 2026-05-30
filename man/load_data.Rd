@@ -4,7 +4,7 @@
 \alias{load_data}
 \title{Loads in the plastic data}
 \usage{
-load_data(csv_data)
+load_data()
 }
 \arguments{
 \item{csv_data}{The csv data set that is getting read into the global environment}
