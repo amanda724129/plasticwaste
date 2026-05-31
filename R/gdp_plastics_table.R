@@ -19,14 +19,14 @@ gdp_plastics_table <- function(top_x_countries) {
   }
 
   plastics_top %>%
-    dplyr::distinct(country, year.x, grand_total, gdp_per_capita_nominal) %>%
-    dplyr::group_by(country) %>%
-    dplyr::summarise(
+    distinct(country, year.x, grand_total, gdp_per_capita_nominal) %>%
+    group_by(country) %>%
+    summarise(
       plastic_total = sum(grand_total, na.rm = TRUE),
       avg_gdp_per_capita_nominal = mean(gdp_per_capita_nominal, na.rm = TRUE),
       .groups = "drop"
     ) %>%
-    dplyr::arrange(dplyr::desc(plastic_total)) %>%
-    dplyr::slice_head(n = top_x_countries)
+    arrange(dplyr::desc(plastic_total)) %>%
+    slice_head(n = top_x_countries)
 }
 
