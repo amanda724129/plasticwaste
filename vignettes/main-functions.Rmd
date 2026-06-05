@@ -8,16 +8,24 @@ vignette: >
 ---
 
 ```{r}
-quantile_table(lower_quantile, upper_quantile)
+quantile_table(
+  lower_quantile = 0.33,
+  upper_quantile = 0.66
+)
 ```
-This function should make a summary table that divides the GDP data into countries with Low GDP, Middle GDP, and High GDP based on what the user wants to classify each group as in relation to the rest of the data. It will display the total plastic waste for each GDP category, as well as the average GDP per capita for each individual category.
+This function creates a summary table that divides countries into Low GDP, Mid GDP, and High GDP groups using the 33rd and 66th percentiles of GDP per capita. The output shows total plastic waste, average GDP per capita, and each group’s share of total plastic waste.
 
 ```{r}
-sankey_plot(top_x_countries, top_x_companies)
+sankey_plot(
+  top_x_countries = 5,
+  top_x_companies = 10
+)
 ```
-This function should take in inputs of the number of top countries and top companies that we want to see displayed, and then display a Sankey diagram showing the flow of plastics between those countries and companies. 
+This function creates a Sankey diagram showing the flow of plastic waste between the top 5 countries and top 10 companies. The countries and companies are selected based on total plastic waste, and the flows are colored by plastic type.
 
 ```{r}
-gdp_plastics_table(top_x_countries)
+gdp_plastics_table(
+  top_x_countries = 5
+)
 ```
-This function should take in an input of the top countries that we want displayed on the summary table, and it should output the countries, the amount of plastic waste they have, and their average GDP per capita.
+This function creates a summary table for the top 5 countries with the highest plastic waste. The output includes each country’s total plastic waste and average GDP per capita.
