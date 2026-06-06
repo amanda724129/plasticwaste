@@ -13,19 +13,45 @@ quantile_table(
   upper_quantile = 0.66
 )
 ```
-This function creates a summary table that divides countries into Low GDP, Mid GDP, and High GDP groups using the 33rd and 66th percentiles of GDP per capita. The output shows total plastic waste, average GDP per capita, and each group’s share of total plastic waste.
+This function creates a summary table that divides countries into Low GDP, Mid GDP, and High GDP groups using the user inputs for the lower and upper percentiles of GDP per capita. It defaults to 0.33 and 0.66. The output shows total plastic waste, average GDP per capita, and each group’s share of total plastic waste.
 
 ```{r}
 sankey_plot(
-  top_x_countries = 5,
-  top_x_companies = 10
+  top_x_countries = 2,
+  top_x_companies = 5
 )
 ```
-This function creates a Sankey diagram showing the flow of plastic waste between the top 5 countries and top 10 companies. The countries and companies are selected based on total plastic waste, and the flows are colored by plastic type.
+This function creates a Sankey diagram showing the flow of plastic waste between the top countries and top companies. The number of top countries and companies that are displayed depend on the user input. The countries and companies are selected based on total plastic waste, and the flows are colored by plastic type.
+
 
 ```{r}
 gdp_plastics_table(
-  top_x_countries = 5
+  top_x_countries = 10
 )
 ```
-This function creates a summary table for the top 5 countries with the highest plastic waste. The output includes each country’s total plastic waste and average GDP per capita.
+This function should take in an input of the top countries that we want displayed on the summary table, and it should output the countries, the amount of plastic waste they have, and their average GDP per capita.
+
+```{r}
+load_data()
+```
+This function loads in the plastics data that is joined with the GDP data as a mega data frame. Most of the data analysis is done in this data set.
+
+```{r}
+gdp_model(explanatory_var = "gdp_per_capita_nominal")
+```
+This function takes in an input of a column from the plastics mega data set and then creates a linear model of it comparing its relationship to total plastic waste. It outputs a summary table.
+
+```{r}
+gdp_plot(cutoff1 = 5000, cutoff2 = 20000)
+```
+This function takes in inputs of cutoffs for High, Middle and Low GDP, and colors the scatter plot points according to the user's definition of the GDP categories. 
+
+```{r}
+make_plastics_long()
+```
+This function creates a long version of the plastics mega data set, in order to create a Sankey diagram. This is only a data wrangling function, which the user will not use.
+
+```{r}
+gdp_plastics("Argentina")
+```
+This function creates a tibble that contains the total plastic and the average GDP per capita nominal for a country. This is not meant for user usage, and is only a data wrangling function.
