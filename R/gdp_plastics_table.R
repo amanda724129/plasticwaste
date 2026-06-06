@@ -3,73 +3,32 @@
 #' Creates a summary table of the countries with the highest plastic waste,
 #' displaying each country's total plastic waste and average GDP per capita.
 #'
-#' @param top_x_countries Integer. Number of countries to display.
+#' @param top_x_countries the number of top countries the user wants to display
 #'
 #' @return A data frame containing the top countries by total plastic waste,
 #' along with their total plastic waste and average GDP per capita.#'
+#'
 #' @export
+#'
+#' @importFrom furrr future_map
 #'
 #' @examples
 #' gdp_plastics_table(5)
-gdp_plastics_table <- function(top_x_countries) {
+gdp_plastics_table <- function(top_x_countries = 10) {
 
-  if (!is.numeric(top_x_countries) ||
-      length(top_x_countries) != 1 ||
-      top_x_countries <= 0) {
-    stop("top_x_countries must be a positive integer")
-  }
+  stopifnot(is.numeric(top_x_countries),
+            length(top_x_countries) == 1,
+            top_x_countries > 0)
 
-  plastics <- load_data()
+  plastics_top <- load_data()
 
-  country_totals <- plastics |>
-    distinct(country, year, grand_total) |>
-    group_by(country) |>
-    summarise(
-      plastic_total = sum(grand_total, na.rm = TRUE),
-      .groups = "drop"
-    )
-
-  top_plastic_countries <- plastics |>
+  plastics_top |>
     distinct(country) |>
-    filter(!country %in% c("EMPTY", "Taiwan_ Republic of China (ROC)")) |>
-    left_join(country_totals, by = "country") |>
+    filter(!country %in% c("EMPTY", "Taiwan_ Republic of China (ROC)", "Nigeria")) |>
     mutate(
-      country_code = countrycode::countrycode(
-        country,
-        origin = "country.name",
-        destination = "iso3c"
-      )
+      result = future_map(country, gdp_plastics),
+      country = recode(country, "NIGERIA" = "Nigeria", "ECUADOR" = "Ecuador")
     ) |>
-    filter(!is.na(country_code)) |>
-    filter(plastic_total != 61123) |>
-    slice_max(plastic_total, n = 50) |>
-    pull(country_code)
-
-  plastics |>
-    filter(!country %in% c(
-      "EMPTY",
-      "Nigeria",
-      "Taiwan_ Republic of China (ROC)",
-      "United Kingdom",
-      "Montenegro"
-    )) |>
-    mutate(
-      country_code = countrycode::countrycode(
-        country,
-        origin = "country.name",
-        destination = "iso3c"
-      )
-    ) |>
-    filter(country_code %in% top_plastic_countries) |>
-    left_join(gdp_df, by = c("country_code", "year")) |>
-    distinct(country, year, grand_total, gdp_per_capita_nominal) |>
-    group_by(country) |>
-    summarise(
-      plastic_total = sum(grand_total, na.rm = TRUE),
-      avg_gdp_per_capita_nominal = mean(gdp_per_capita_nominal, na.rm = TRUE),
-      .groups = "drop"
-    ) |>
-    arrange(desc(plastic_total)) |>
-    slice_head(n = top_x_countries)
+    unnest(result) |>
+    slice_max(plastic_total, n = top_x_countries)
 }
-

@@ -4,7 +4,7 @@
 \alias{sankey_plot}
 \title{Creates a Sankey plot}
 \usage{
-sankey_plot(top_x_countries = 5, top_x_companies = 10)
+sankey_plot(top_x_countries = 2, top_x_companies = 5)
 }
 \arguments{
 \item{top_x_countries}{the number of top countries the user wants to display}

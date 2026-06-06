@@ -7,9 +7,9 @@
 quantile_table(lower_quantile = 0.33, upper_quantile = 0.66)
 }
 \arguments{
-\item{lower_quantile}{A number between 0 and 1 defining the Low/Mid boundary.Defaults to 0.33.}
+\item{lower_quantile}{A quantile that represents a percentage of the data, defining the Low/Mid boundary. Must be between 0 and 1 and defaults to 0.33.}
 
-\item{upper_quantile}{A number between 0 and 1 defining the Mid/High boundary. Must be greater than the lower quantile. Defaults to 0.66.}
+\item{upper_quantile}{A quantile that represents a percentage of the data, defining the Mid/High boundary. Must be between 0 and 1, greater than the lower quantile, and defaults to 0.66.}
 }
 \value{
 A tibble with four columns: gdp_category (the quantile group label),

@@ -4,14 +4,14 @@
 \alias{gdp_plastics_table}
 \title{GDP and Plastics Summary Table}
 \usage{
-gdp_plastics_table(top_x_countries)
+gdp_plastics_table(top_x_countries = 10)
 }
 \arguments{
-\item{top_x_countries}{Integer. Number of countries to display.}
+\item{top_x_countries}{the number of top countries the user wants to display}
 }
 \value{
 A data frame containing the top countries by total plastic waste,
-along with their total plastic waste and average GDP per capita.#' @export
+along with their total plastic waste and average GDP per capita.#'
 }
 \description{
 Creates a summary table of the countries with the highest plastic waste,

@@ -9,7 +9,7 @@
 #' @importFrom tidyr pivot_longer
 
 make_plastics_long <- function() {
-  plastics_top <- make_plastics_top()
+  plastics_top <- load_data()
 
   plastics_top |>
     select(country, country_code, year, parent_company, hdpe, ldpe, o, pet, pp, ps, pvc) |>

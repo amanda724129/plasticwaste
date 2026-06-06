@@ -4,8 +4,8 @@
 #' GDP per capita, then summarises total plastic waste, average GDP per capita,
 #' and each group's share of the overall total for each group.
 #'
-#' @param lower_quantile A number between 0 and 1 defining the Low/Mid boundary.Defaults to 0.33.
-#' @param upper_quantile A number between 0 and 1 defining the Mid/High boundary. Must be greater than the lower quantile. Defaults to 0.66.
+#' @param lower_quantile A quantile that represents a percentage of the data, defining the Low/Mid boundary. Must be between 0 and 1 and defaults to 0.33.
+#' @param upper_quantile A quantile that represents a percentage of the data, defining the Mid/High boundary. Must be between 0 and 1, greater than the lower quantile, and defaults to 0.66.
 #'
 #' @return A tibble with four columns: gdp_category (the quantile group label),
 #' total_plastic (total plastic waste for the group),
@@ -13,6 +13,7 @@
 #' share_of_total (the group's share of overall plastic waste).
 #'
 #' @importFrom dplyr distinct mutate filter group_by summarise pull
+#' @importFrom furrr future_map_int future_map_dbl
 #'
 #' @export
 
@@ -23,7 +24,7 @@ quantile_table <- function(lower_quantile = 0.33, upper_quantile = 0.66) {
     lower_quantile < upper_quantile
   )
 
-  plastics_top <- make_plastics_top()
+  plastics_top <- load_data()
   labels <- c("Low GDP", "Mid GDP", "High GDP")
 
   classified <- plastics_top |>
@@ -53,8 +54,7 @@ quantile_table <- function(lower_quantile = 0.33, upper_quantile = 0.66) {
 
   tibble::tibble(gdp_category = labels) |>
     mutate(
-      total_plastic = purrr::map_int(gdp_category, quantile_plastic),
-      avg_gdp_per_capita = purrr::map_dbl(gdp_category, quantile_gdp),
+      total_plastic = future_map_int(gdp_category, quantile_plastic),
+      avg_gdp_per_capita = future_map_dbl(gdp_category, quantile_gdp),
       share_of_total = total_plastic / sum(total_plastic, na.rm = TRUE))
 }
-

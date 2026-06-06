@@ -24,19 +24,7 @@ gdp_plot <- function(cutoff1 = 5000, cutoff2 = 20000) {
     cutoff1 < cutoff2
   )
 
-  gdp_plastics <- function(input_country){
-
-    country_data <- plastics_top |>
-      filter(country == input_country) |>
-      distinct(year, grand_total, gdp_per_capita_nominal)
-
-    tibble(
-      plastic_total = sum(country_data$grand_total, na.rm = TRUE),
-      avg_gdp_per_capita_nominal = mean(country_data$gdp_per_capita_nominal, na.rm = TRUE)
-    )
-  }
-
-  plastics_top <- make_plastics_top()
+  plastics_top <- load_data()
 
   plastics_top |>
     distinct(country) |>
